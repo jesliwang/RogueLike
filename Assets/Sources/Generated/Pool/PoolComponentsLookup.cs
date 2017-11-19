@@ -12,60 +12,66 @@ public static class PoolComponentsLookup {
     public const int AIMove = 1;
     public const int AIMoveTarget = 2;
     public const int Animation = 3;
-    public const int AudioAttackSource = 4;
-    public const int Audio = 5;
-    public const int AudioDeathSource = 6;
-    public const int AudioPickupSource = 7;
-    public const int AudioWalkSource = 8;
-    public const int Camera = 9;
-    public const int Config = 10;
-    public const int Controllable = 11;
-    public const int Coroutine = 12;
-    public const int CurrentTurnNode = 13;
-    public const int DamageSprite = 14;
-    public const int DeleteOnExit = 15;
-    public const int Destructible = 16;
-    public const int Exit = 17;
-    public const int FoodBag = 18;
-    public const int Food = 19;
-    public const int FoodDamager = 20;
-    public const int GameBoardCache = 21;
-    public const int GameBoard = 22;
-    public const int GameBoardElement = 23;
-    public const int GameOver = 24;
-    public const int GridPositions = 25;
-    public const int Level = 26;
-    public const int LevelTransitionDelay = 27;
-    public const int MoveInput = 28;
-    public const int NestedView = 29;
-    public const int NestedViewContainer = 30;
-    public const int NextTurn = 31;
-    public const int Position = 32;
-    public const int Resource = 33;
-    public const int SkipTurn = 34;
-    public const int SmoothMove = 35;
-    public const int SmoothMoveInProgress = 36;
-    public const int SpriteCache = 37;
-    public const int TurnBased = 38;
-    public const int TurnOrder = 39;
-    public const int View = 40;
-    public const int ViewContainer = 41;
+    public const int Attack = 4;
+    public const int AudioAttackSource = 5;
+    public const int Audio = 6;
+    public const int AudioDeathSource = 7;
+    public const int AudioPickupSource = 8;
+    public const int AudioWalkSource = 9;
+    public const int Camera = 10;
+    public const int Chop = 11;
+    public const int Config = 12;
+    public const int Controllable = 13;
+    public const int ControllerList = 14;
+    public const int Coroutine = 15;
+    public const int CurrentTurnNode = 16;
+    public const int DamageSprite = 17;
+    public const int DeleteOnExit = 18;
+    public const int Destructible = 19;
+    public const int Exit = 20;
+    public const int FoodBag = 21;
+    public const int Food = 22;
+    public const int FoodDamager = 23;
+    public const int GameBoardCache = 24;
+    public const int GameBoard = 25;
+    public const int GameBoardElement = 26;
+    public const int GameOver = 27;
+    public const int GridPositions = 28;
+    public const int Level = 29;
+    public const int LevelTransitionDelay = 30;
+    public const int MoveInput = 31;
+    public const int NestedView = 32;
+    public const int NestedViewContainer = 33;
+    public const int NextTurn = 34;
+    public const int Position = 35;
+    public const int Resource = 36;
+    public const int SkipTurn = 37;
+    public const int SmoothMove = 38;
+    public const int SmoothMoveInProgress = 39;
+    public const int SpriteCache = 40;
+    public const int TurnBased = 41;
+    public const int TurnOrder = 42;
+    public const int View = 43;
+    public const int ViewContainer = 44;
 
-    public const int TotalComponents = 42;
+    public const int TotalComponents = 45;
 
     public static readonly string[] componentNames = {
         "ActiveTurnBased",
         "AIMove",
         "AIMoveTarget",
         "Animation",
+        "Attack",
         "AudioAttackSource",
         "Audio",
         "AudioDeathSource",
         "AudioPickupSource",
         "AudioWalkSource",
         "Camera",
+        "Chop",
         "Config",
         "Controllable",
+        "ControllerList",
         "Coroutine",
         "CurrentTurnNode",
         "DamageSprite",
@@ -103,14 +109,17 @@ public static class PoolComponentsLookup {
         typeof(AIMoveComponent),
         typeof(AIMoveTargetComponent),
         typeof(AnimationComponent),
+        typeof(AttackComponent),
         typeof(AudioAttackSourceComponent),
         typeof(AudioComponent),
         typeof(AudioDeathSourceComponent),
         typeof(AudioPickupSourceComponent),
         typeof(AudioWalkSourceComponent),
         typeof(CameraComponent),
+        typeof(ChopComponent),
         typeof(ConfigComponent),
         typeof(ControllableComponent),
+        typeof(ControllerListComponent),
         typeof(CoroutineComponent),
         typeof(CurrentTurnNodeComponent),
         typeof(DamageSpriteComponent),

@@ -3,5 +3,6 @@
     Up,
     Right,
     Down,
-    Left
+    Left,
+    Fire
 }

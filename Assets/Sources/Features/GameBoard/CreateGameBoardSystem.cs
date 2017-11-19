@@ -170,6 +170,7 @@ public class CreateGameBoardSystem : ReactiveSystem<PoolEntity>, IInitializeSyst
         player.isAIMoveTarget = true;
 
         player.isCamera = true;
+        player.isChop = true;
 
         player.AddAudioAttackSource(Audio.scavengers_chop1, Audio.scavengers_chop2);
         player.AddAudioDeathSource(Audio.scavengers_die);

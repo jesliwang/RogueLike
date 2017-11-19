@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections.Generic;
 
 public class InputController : MonoBehaviour
 {
@@ -38,7 +39,19 @@ public class InputController : MonoBehaviour
             var pool = Contexts.sharedInstance.pool;
             pool.ReplaceMoveInput(movement);
             pool.moveInputEntity.isDeleteOnExit = true;
+
         }
+        if (Input.GetButtonDown("Fire1"))
+		{
+            var pool = Contexts.sharedInstance.pool;
+            var e = pool.controllableEntity;
+            if(!e.hasControllerList){
+				e.AddControllerList(new List<Controller>(){
+				    Controller.Fire
+			    });
+            }
+
+		}
     }
 
     Vector2 GetInput()

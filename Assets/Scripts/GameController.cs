@@ -61,7 +61,9 @@ public class GameController : MonoBehaviour
             .Add(new RenderPositionSystem(contexts))
             .Add(new SmoothMoveSystem(contexts))
 
-            .Add(new CameraSystem(contexts));
+            //.Add(new CameraSystem(contexts))
+            .Add(new ControllerSystem(contexts))
+            .Add(new ChopSystem(contexts));
 
         return systems;
     }
