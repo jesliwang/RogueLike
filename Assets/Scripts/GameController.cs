@@ -1,70 +1,84 @@
 using Entitas;
-using Entitas.VisualDebugging.Unity;
+using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
-{
-    public bool useSeed = false;
-    public int randomSeed = 42;
+public class GameController : MonoBehaviour {
 
-    Systems systems;
+    public Blueprints blueprints;
 
-    void Start()
-    {
-        if (useSeed)
-        {
-            Random.seed = randomSeed;
-        }
+    Systems _systems;
 
-        Debug.Log("Starting GameController using seed " + Random.seed);
-        var contexts = Contexts.sharedInstance;
-        systems = CreateSystems(contexts);
-        systems.Initialize();
+    void Awake() {
+        Application.targetFrameRate = 60;
     }
 
-    void Update()
-    {
-        systems.Execute();
+    void Start() {
+
+        GameRandom.core = new Rand(0);
+        GameRandom.view = new Rand(0);
+
+        var pools = Pools.sharedInstance;
+        pools.SetAllPools();
+        pools.AddEntityIndices();
+
+        pools.blueprints.SetBlueprints(blueprints);
+
+        _systems = createSystems(pools);
+
+        // Suggested systems lifecycle:
+        // systems.Initialize() on Start
+        // systems.Execute() on Update
+        // systems.Cleanup() on Update after systems.Execute()
+        // systems.TearDown() on OnDestroy
+
+        _systems.Initialize();
     }
 
-    static Systems CreateSystems(Contexts contexts)
-    {
-        Systems systems;
+    void Update() {
+        _systems.Execute();
+        _systems.Cleanup();
+    }
 
-#if (UNITY_EDITOR)
-        systems = new DebugSystems("Editor");
-#else
-        systems = new Systems();
-#endif
+    void OnDestroy() {
+        _systems.TearDown();
+    }
 
-        systems
-            .Add(new CoroutineSystem(contexts))
-            .Add(new GameStartSystem(contexts))
-            .Add(new GameOverSystem(contexts))
+    Systems createSystems(Pools pools) {
+        return new Feature("Systems")
 
-            .Add(new GameBoardCacheSystem(contexts))
-            .Add(new CreateGameBoardSystem(contexts))
+            // Initialize
+            .Add(pools.CreateSystem(new IncrementTickSystem()))
+            .Add(pools.CreateSystem(new CreatePlayerSystem()))
+            .Add(pools.CreateSystem(new CreateEnemySystem()))
 
-            .Add(new TurnSystem(contexts))
-            .Add(new InputSystem(contexts))
-            .Add(new AIMoveSystem(contexts))
+            .Add(pools.core.CreateSystem(new AddViewSystem()))
+            .Add(pools.bullets.CreateSystem(new AddViewFromObjectPoolSystem()))
 
-            .Add(new ExitSystem(contexts))
-            .Add(new FoodSystem(contexts))
-            .Add(new DestructibleSystem(contexts))
+            // Input
+            .Add(pools.CreateSystem(new InputSystem()))
+            .Add(pools.input.CreateSystem(new ProcessMoveInputSystem()))
+                .Add(pools.input.CreateSystem(new ProcessAttackInputSystem()))
+            //.Add(pools.input.CreateSystem(new ProcessShootInputSystem()))
+            .Add(pools.input.CreateSystem(new ProcessCollisionSystem()))
+            .Add(pools.input.CreateSystem(new SlowMotionSystem()))
 
-        // Render
-            .Add(new AnimationSystem(contexts))
-            .Add(new DamageSpriteSystem(contexts))
-            .Add(new RemoveViewSystem(contexts))
-            .Add(new AddViewSystem(contexts))
-            .Add(new RenderPositionSystem(contexts))
-            .Add(new SmoothMoveSystem(contexts))
+            // Update
+            .Add(pools.core.CreateSystem(new BulletCoolDownSystem()))
+            //.Add(pools.core.CreateSystem(new StartEnemyWaveSystem()))
+            .Add(pools.CreateSystem(new VelocitySystem()))
+            .Add(pools.CreateSystem(new RenderPositionSystem()))
+            .Add(pools.core.CreateSystem(new CheckHealthSystem()))
+            .Add(pools.bullets.CreateSystem(new BulletOutOfScreenSystem()))
+            
+            .Add(pools.core.CreateSystem(new LogSystem()))
+            //
+            .Add(pools.CreateSystem(new InAttackSystem()))
 
-            //.Add(new CameraSystem(contexts))
-            .Add(new ControllerSystem(contexts))
-            .Add(new ChopSystem(contexts));
+            // Animate Destroy
+            .Add(pools.CreateSystem(new AnimateOutOfScreenViewSystem()))
+            .Add(pools.CreateSystem(new AnimateDestroyViewSystem()))
 
-        return systems;
+            // Destroy
+            .Add(pools.CreateSystem(new DestroyEntitySystem()));
     }
 }

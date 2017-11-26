@@ -1,9 +1,8 @@
-using Entitas;
-using Entitas.CodeGeneration.Attributes;
+﻿using Entitas;
+using UnityEngine;
 
-[Pool]
-[Unique]   
-public class MoveInputComponent : IComponent
-{
-    public Movement movement;
+[Input]
+public sealed class MoveInputComponent : IComponent {
+
+    public Vector3 direction;
 }

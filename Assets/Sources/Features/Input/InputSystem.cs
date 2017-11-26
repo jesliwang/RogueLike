@@ -1,106 +1,44 @@
-using Entitas;
-using ICollectionOfEntityExtensions;
-using System.Collections.Generic;
+﻿using Entitas;
 using UnityEngine;
 
-public class InputSystem : ReactiveSystem<PoolEntity>
-{
-    static Vector2 ToVector(Movement movement)
-    {
-        switch (movement)
-        {
-            case Movement.Up:
-                return new Vector2(0, 1);
-            case Movement.Right:
-                return new Vector2(1, 0);
-            case Movement.Down:
-                return new Vector2(0, -1);
-            case Movement.Left:
-            default:
-                return new Vector2(-1, 0);
-        }
+public sealed class InputSystem : ISetPools, IExecuteSystem, ICleanupSystem {
+
+    const string PLAYER1_ID = "Player1";
+
+    Pools _pools;
+    Group _moveInputs;
+    Group _shootInputs;
+
+    public void SetPools(Pools pools) {
+        _pools = pools;
+        _moveInputs = pools.input.GetGroup(InputMatcher.MoveInput);
+        _shootInputs = pools.input.GetGroup(InputMatcher.ShootInput);
     }
 
-    readonly PoolContext pool;
+    public void Execute() {
+        var moveX = Input.GetAxisRaw("Horizontal");
+        var moveY = Input.GetAxisRaw("Vertical");
 
-    public InputSystem(Contexts contexts)
-        : base(contexts.pool)
-    {
-        pool = contexts.pool;
+        _pools.input.CreateEntity()
+                 .AddMoveInput(new Vector3(moveX, moveY))
+                 .AddInputOwner(PLAYER1_ID);
+
+        if(Input.GetAxisRaw("Fire1") != 0) {
+            _pools.input.CreateEntity()
+                  .IsAttackInput(true)
+                     .AddInputOwner(PLAYER1_ID);
+        }
+
+        _pools.input.isSlowMotion = Input.GetAxisRaw("Fire2") != 0;
     }
 
-    protected override bool Filter(PoolEntity entity)
-    {
-        return true;
-    }
-
-    protected override ICollector<PoolEntity> GetTrigger(IContext<PoolEntity> context)
-    {
-        return context.CreateCollector(PoolMatcher.MoveInput);
-    }
-
-    protected override void Execute(List<PoolEntity> entities)
-    {
-        if (pool.isGameOver
-            || pool.isLevelTransitionDelay
-            || !pool.hasMoveInput
-            || !pool.isControllable
-            || !pool.controllableEntity.isActiveTurnBased)
-        {
-            // ignore input
-            return;
+    public void Cleanup() {
+        foreach(var e in _moveInputs.GetEntities()) {
+            _pools.input.DestroyEntity(e);
         }
 
-        var controllable = pool.controllableEntity;
-        pool.ReplaceFoodBag(pool.foodBag.points - 1);
-
-        var movement = pool.moveInput.movement;
-        var movementPos = ToVector(movement);
-
-        var currentPos = controllable.position;
-        int newX = currentPos.x + (int)movementPos.x;
-        int newY = currentPos.y + (int)movementPos.y;
-
-        ICollection<PoolEntity> existing;
-        bool canMove = pool.IsGameBoardPositionOpen(newX, newY, out existing);
-        if (existing != null)
-        {
-            canMove = PrepareMove(controllable, existing);
+        foreach(var e in _shootInputs.GetEntities()) {
+            _pools.input.DestroyEntity(e);
         }
-
-        if (canMove)
-        {
-            pool.PlayAudio(controllable.audioWalkSource);
-            controllable.ReplacePosition(newX, newY);
-        }
-
-        controllable.isActiveTurnBased = false;
-    }
-
-    bool PrepareMove(PoolEntity player, ICollection<PoolEntity> entitiesInSpot)
-    {
-        if (entitiesInSpot.ContainsComponent(PoolComponentsLookup.AIMove))
-        {
-            // enemy there, can't do anything
-            return false;
-        }
-
-        // handle walls
-        PoolEntity wall = null;
-        if (entitiesInSpot.ContainsComponent(PoolComponentsLookup.Destructible, out wall))
-        {
-            wall.DamageDestructible();
-            pool.PlayAudio(player.audioAttackSource);
-
-            if (player.hasView)
-            {
-                player.AddAnimation(Animation.playerChop);
-            }
-            // nothing to do now that we've chopped
-            return false;
-        }
-
-        // otherwise we can move
-        return true;
     }
 }
