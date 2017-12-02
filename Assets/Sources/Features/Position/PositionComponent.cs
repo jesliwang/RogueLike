@@ -4,5 +4,5 @@ using UnityEngine;
 [Core, Bullets]
 public sealed class PositionComponent : IComponent {
 
-    public Vector3 value;
+    public Vector2 value;
 }

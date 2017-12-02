@@ -21,7 +21,7 @@ public sealed class ProcessMoveInputSystem : ISetPools, IReactiveSystem {
         var e = _pools.core.GetEntityWithPlayerId(ownerId);
 
         // TODO Speed Shoud be configurable
-        e.ReplaceVelocity(input.moveInput.direction.normalized * 0.03f);
+        e.ReplaceVelocity(input.moveInput.direction.normalized);
 
         var playerViewController = (IPlayerController)e.view.controller;
         if(!(Mathf.Abs(input.moveInput.direction.x) < 0.1f && Mathf.Abs(input.moveInput.direction.y) < 0.1f)){

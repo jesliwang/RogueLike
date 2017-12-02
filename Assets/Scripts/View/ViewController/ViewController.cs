@@ -1,11 +1,16 @@
 ﻿using Entitas;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class ViewController : MonoBehaviour, IViewController {
 
-    public virtual Vector3 position {
-        get { return transform.localPosition; }
-        set { transform.localPosition = value; }
+    public virtual Vector2 position {
+        get { 
+            return GetComponent<Rigidbody2D>().position; 
+        }
+        set {
+            GetComponent<Rigidbody2D>().position = value;
+        }
     }
 
     public virtual Vector3 rotate {
@@ -27,5 +32,9 @@ public class ViewController : MonoBehaviour, IViewController {
 
     public virtual void Reset() {
         gameObject.Unlink();
+    }
+
+    public virtual void Velocity(Vector2 value){
+        GetComponent<Rigidbody2D>().velocity = value;
     }
 }

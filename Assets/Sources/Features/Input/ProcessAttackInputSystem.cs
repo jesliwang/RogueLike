@@ -27,7 +27,7 @@ public class ProcessAttackInputSystem : ISetPools, IReactiveSystem
             var playerViewController = (IPlayerController)e.view.controller;
             playerViewController.AttackTrigger();
           
-            _pools.blueprints.blueprints.instance.ApplyBullet(_pools.bullets.CreateEntity(), e.position.value, UnityEngine.Vector3.zero, _bulletsObjectPool, Vector3.zero);
+            _pools.blueprints.blueprints.instance.ApplyBullet(_pools.bullets.CreateEntity(), playerViewController.position, Vector2.zero , _bulletsObjectPool, Vector3.zero);
         }
     }
 
@@ -37,4 +37,5 @@ public class ProcessAttackInputSystem : ISetPools, IReactiveSystem
         _pools = pools;
         _bulletsObjectPool = new ObjectPool<GameObject>(() => Assets.Instantiate<GameObject>(Res.PlayerBullet));
     }
+
 }

@@ -1,22 +1,28 @@
 using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 using Entitas;
 using System;
 
-public sealed class LogSystem :ISetPools, IExecuteSystem
+
+public sealed class LogSystem : ISetPool, IReactiveSystem, ICleanupSystem
 {
-	Group _coolDowns;
 
-	public void SetPools(Pools pools)
-	{
-        _coolDowns = pools.core.GetGroup(CoreMatcher.Log);
-	}
+    public TriggerOnEvent trigger { get { return CoreMatcher.Log.OnEntityAdded(); } }
 
-	public void Execute()
+    Pool _pool;
+    Group _logs;
+
+    void ISetPool.SetPool(Pool pool)
     {
-		foreach (var e in _coolDowns.GetEntities())
-		{
-            switch(e.log.type)
+        _pool = pool;
+        _logs = pool.GetGroup(CoreMatcher.Log);
+    }
+
+    public void Execute(List<Entity> entities)
+    {
+        foreach (var e in _logs.GetEntities())
+        {
+            switch (e.log.type)
             {
                 case LogType.Error:
                     Debug.LogError(e.log.logInfo);
@@ -27,11 +33,19 @@ public sealed class LogSystem :ISetPools, IExecuteSystem
                 case LogType.Warning:
                     Debug.LogWarning(e.log.logInfo);
                     break;
-                    default:
+                default:
                     break;
             }
-		}
+        }
     }
 
-
+    public void Cleanup()
+    {
+        foreach (var e in _logs.GetEntities())
+        {
+            _pool.DestroyEntity(e);
+        }
+    }
 }
+
+

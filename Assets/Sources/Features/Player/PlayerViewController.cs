@@ -12,7 +12,7 @@ public interface IPlayerController : IViewController {
 }
 
 public class PlayerViewController : AnimatorViewController, IPlayerController
-{
+{    
     public void SetPlayerDirection(float x, float y)
     {
 		_animator.SetFloat("moveX", x );

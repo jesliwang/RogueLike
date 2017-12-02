@@ -4,7 +4,7 @@ using UnityEngine;
 public interface IViewController {
 
     GameObject gameObject { get; }
-    Vector3 position { get; set; }
+    Vector2 position { get; set; }
     Vector3 rotate { get; set; }
 
     void Link(Entity entity, Pool pool);
@@ -13,4 +13,6 @@ public interface IViewController {
     void Hide(bool animated);
 
     void Reset();
+
+    void Velocity(Vector2 value);
 }

@@ -5,7 +5,7 @@ public class CollisionEmitter : MonoBehaviour {
 
     public string targetTag;
 
-    void OnCollisionEnter(Collision collision) {
+    void OnCollisionEnter2D(Collision2D collision) {
         if(collision.gameObject.CompareTag(targetTag)) {
             var link = gameObject.GetEntityLink();
             var targetLink = collision.gameObject.GetEntityLink();

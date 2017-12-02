@@ -15,13 +15,13 @@ namespace Entitas {
         public PositionComponent position { get { return (PositionComponent)GetComponent(BulletsComponentIds.Position); } }
         public bool hasPosition { get { return HasComponent(BulletsComponentIds.Position); } }
 
-        public Entity AddPosition(UnityEngine.Vector3 newValue) {
+        public Entity AddPosition(UnityEngine.Vector2 newValue) {
             var component = CreateComponent<PositionComponent>(BulletsComponentIds.Position);
             component.value = newValue;
             return AddComponent(BulletsComponentIds.Position, component);
         }
 
-        public Entity ReplacePosition(UnityEngine.Vector3 newValue) {
+        public Entity ReplacePosition(UnityEngine.Vector2 newValue) {
             var component = CreateComponent<PositionComponent>(BulletsComponentIds.Position);
             component.value = newValue;
             ReplaceComponent(BulletsComponentIds.Position, component);

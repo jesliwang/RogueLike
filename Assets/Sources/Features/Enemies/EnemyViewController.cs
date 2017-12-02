@@ -4,7 +4,7 @@ public interface IEnemyController : IViewController {
     void InitWithWave(int wave);
 }
 
-public class EnemyViewController : AnimatorViewController, IEnemyController {
+public class EnemyViewController : AnimatorViewController, IEnemyController, InterfaceHit {
 
     [SerializeField]
     EffectPlayer _despawnEffects;
@@ -30,5 +30,10 @@ public class EnemyViewController : AnimatorViewController, IEnemyController {
 
         Reset();
         Assets.Destroy(gameObject);
+    }
+
+    public void Hit()
+    {
+        Debug.LogError("eeeee");
     }
 }

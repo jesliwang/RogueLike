@@ -16,10 +16,15 @@ public sealed class ProcessCollisionSystem : ISetPool, IReactiveSystem, ICleanup
 
     public void Execute(List<Entity> entities) {
         foreach(var e in entities) {
-            _pool.CreateEntity().AddLog(UnityEngine.LogType.Error, "eeeee");
-            //e.collision.self.ReplaceHealth(e.collision.self.health.value - 1);
-            //var newHealth = e.collision.other.health.value - e.collision.self.damage.value;
-            //e.collision.other.ReplaceHealth(Math.Max(0, newHealth));
+            e.collision.other.isHit = true;
+            if(e.collision.other.hasView){
+                var hitCtrl = (InterfaceHit)e.collision.other.view.controller;
+                if (null != hitCtrl)
+                {
+                    hitCtrl.Hit();
+                }
+            }
+
         }
     }
 

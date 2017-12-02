@@ -51,6 +51,8 @@ public class GameController : MonoBehaviour {
             .Add(pools.CreateSystem(new CreatePlayerSystem()))
             .Add(pools.CreateSystem(new CreateEnemySystem()))
 
+                .Add(pools.core.CreateSystem(new StageSystem()))
+
             .Add(pools.core.CreateSystem(new AddViewSystem()))
             .Add(pools.bullets.CreateSystem(new AddViewFromObjectPoolSystem()))
 
@@ -66,13 +68,11 @@ public class GameController : MonoBehaviour {
             .Add(pools.core.CreateSystem(new BulletCoolDownSystem()))
             //.Add(pools.core.CreateSystem(new StartEnemyWaveSystem()))
             .Add(pools.CreateSystem(new VelocitySystem()))
-            .Add(pools.CreateSystem(new RenderPositionSystem()))
+                .Add(pools.CreateSystem(new RenderPositionSystem()))
             .Add(pools.core.CreateSystem(new CheckHealthSystem()))
             .Add(pools.bullets.CreateSystem(new BulletOutOfScreenSystem()))
             
             .Add(pools.core.CreateSystem(new LogSystem()))
-            //
-            .Add(pools.CreateSystem(new InAttackSystem()))
 
             // Animate Destroy
             .Add(pools.CreateSystem(new AnimateOutOfScreenViewSystem()))

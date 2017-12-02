@@ -19,11 +19,13 @@ public static class CoreComponentIds {
     public const int ViewObjectPool = 8;
     public const int BulletCoolDown = 9;
     public const int Enemy = 10;
-    public const int InAttack = 11;
-    public const int Log = 12;
-    public const int Player = 13;
+    public const int Hit = 11;
+    public const int InAttack = 12;
+    public const int Log = 13;
+    public const int Player = 14;
+    public const int Stage = 15;
 
-    public const int TotalComponents = 14;
+    public const int TotalComponents = 16;
 
     public static readonly string[] componentNames = {
         "Asset",
@@ -37,9 +39,11 @@ public static class CoreComponentIds {
         "ViewObjectPool",
         "BulletCoolDown",
         "Enemy",
+        "Hit",
         "InAttack",
         "Log",
-        "Player"
+        "Player",
+        "Stage"
     };
 
     public static readonly System.Type[] componentTypes = {
@@ -54,8 +58,10 @@ public static class CoreComponentIds {
         typeof(ViewObjectPoolComponent),
         typeof(BulletCoolDownComponent),
         typeof(EnemyComponent),
+        typeof(HitComponent),
         typeof(InAttackComponent),
         typeof(LogComponent),
-        typeof(PlayerComponent)
+        typeof(PlayerComponent),
+        typeof(StageComponent)
     };
 }
