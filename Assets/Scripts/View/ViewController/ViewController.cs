@@ -1,7 +1,6 @@
 ﻿using Entitas;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class ViewController : MonoBehaviour, IViewController {
 
     public virtual Vector2 position {

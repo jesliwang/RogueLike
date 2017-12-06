@@ -5,6 +5,23 @@ public interface IBulletController : IPoolableViewController {
 
 public class BulletViewController : PoolableViewController, IBulletController {
 
+    public override Vector2 position
+    {
+        get
+        {
+            return transform.position;
+        }
+        set
+        {
+            transform.position = value;
+        }
+    }
+
+    public override void Velocity(Vector2 value)
+    {
+        transform.Translate(new Vector3(value.x, value.y, 0));
+    }
+
     [SerializeField]
     Vector3 _minRotation;
 

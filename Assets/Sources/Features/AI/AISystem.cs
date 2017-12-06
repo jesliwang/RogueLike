@@ -2,8 +2,9 @@ using UnityEngine;
 using System.Collections;
 using Entitas;
 
-public class AISystem : ISetPool, IExecuteSystem
+public class AISystem : ISetPools, IExecuteSystem
 {
+    ObjectPool<GameObject> _bulletsObjectPool;
     Group aiObjects;
     
     public void Execute()
@@ -18,6 +19,8 @@ public class AISystem : ISetPool, IExecuteSystem
                 if (null != ctrl)
                 {
                     ctrl.Attack();
+                    _pools.blueprints.blueprints.instance.ApplyBullet(_pools.blueprints.blueprints.instance.enemyBullet, _pools.bullets.CreateEntity(), e.view.controller.position, new Vector2(-0.05f, 0) , _bulletsObjectPool, Vector3.zero);
+
                 }
                 e.ReplaceAIIdle(60*10);
             }
@@ -25,8 +28,12 @@ public class AISystem : ISetPool, IExecuteSystem
         }
     }
 
-    public void SetPool(Pool pool)
+    Pools _pools;
+    public void SetPools(Pools pools)
     {
-        aiObjects = pool.GetGroup(Matcher.AllOf( CoreMatcher.AI, CoreMatcher.View));
+        _pools = pools;
+        aiObjects = pools.core.GetGroup(Matcher.AllOf( CoreMatcher.AI, CoreMatcher.View));
+
+        _bulletsObjectPool = new ObjectPool<GameObject>(() => Assets.Instantiate<GameObject>(Res.EnemyBullet));
     }
 }
