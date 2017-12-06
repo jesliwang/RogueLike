@@ -12,24 +12,24 @@ namespace Entitas {
 
     public partial class Entity {
 
-        static readonly BulletComponent bulletComponent = new BulletComponent();
+        public BulletComponent bullet { get { return (BulletComponent)GetComponent(BulletsComponentIds.Bullet); } }
+        public bool hasBullet { get { return HasComponent(BulletsComponentIds.Bullet); } }
 
-        public bool isBullet {
-            get { return HasComponent(BulletsComponentIds.Bullet); }
-            set {
-                if(value != isBullet) {
-                    if(value) {
-                        AddComponent(BulletsComponentIds.Bullet, bulletComponent);
-                    } else {
-                        RemoveComponent(BulletsComponentIds.Bullet);
-                    }
-                }
-            }
+        public Entity AddBullet(Entitas.Serialization.Blueprints.Blueprint newBulletRes) {
+            var component = CreateComponent<BulletComponent>(BulletsComponentIds.Bullet);
+            component.bulletRes = newBulletRes;
+            return AddComponent(BulletsComponentIds.Bullet, component);
         }
 
-        public Entity IsBullet(bool value) {
-            isBullet = value;
+        public Entity ReplaceBullet(Entitas.Serialization.Blueprints.Blueprint newBulletRes) {
+            var component = CreateComponent<BulletComponent>(BulletsComponentIds.Bullet);
+            component.bulletRes = newBulletRes;
+            ReplaceComponent(BulletsComponentIds.Bullet, component);
             return this;
+        }
+
+        public Entity RemoveBullet() {
+            return RemoveComponent(BulletsComponentIds.Bullet);
         }
     }
 }

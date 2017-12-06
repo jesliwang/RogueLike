@@ -10,8 +10,8 @@ namespace Entitas.Unity.Serialization.Blueprints {
                 .AddPosition(position);
         }
 
-        public Entity ApplyBullet(Entity entity, Vector2 position, Vector2 velocity, ObjectPool<GameObject> gameObjectPool, Vector3 rotate) {
-            return entity.ApplyBlueprint(playerBullet)
+        public Entity ApplyBullet(Blueprint bullet, Entity entity, Vector2 position, Vector2 velocity, ObjectPool<GameObject> gameObjectPool, Vector3 rotate) {
+            return entity.ApplyBlueprint(bullet)
                 .AddPosition(position)
                 .AddVelocity(velocity)
                          .AddRotate(rotate)

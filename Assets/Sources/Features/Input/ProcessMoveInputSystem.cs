@@ -24,25 +24,7 @@ public sealed class ProcessMoveInputSystem : ISetPools, IReactiveSystem {
         e.ReplaceVelocity(input.moveInput.direction.normalized);
 
         var playerViewController = (IPlayerController)e.view.controller;
-        if(!(Mathf.Abs(input.moveInput.direction.x) < 0.1f && Mathf.Abs(input.moveInput.direction.y) < 0.1f)){
-			playerViewController.SetPlayerDirection(input.moveInput.direction.x, input.moveInput.direction.y);
-
-		}
-
-        if (Math.Abs(input.moveInput.direction.x) > 0.1f)
-        {
-            playerViewController.SetPlayerSpeed(0.3f);
-        }
-        else if(Math.Abs(input.moveInput.direction.y) > 0.1f)
-        {
-            playerViewController.SetPlayerSpeed(0.3f);
-			
-        }
-        else
-        {
-            playerViewController.SetPlayerSpeed(0);
-        }
-
+		playerViewController.SetPlayerDirection(input.moveInput.direction.x, input.moveInput.direction.y);
 
     }
 }

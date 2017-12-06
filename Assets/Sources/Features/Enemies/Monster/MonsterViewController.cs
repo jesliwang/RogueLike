@@ -1,16 +1,12 @@
 using System;
 using UnityEngine;
 
-public interface IMonsterController : IViewController
-{
-    void Attack();
-}
-
-public class MonsterViewController : AnimatorViewController, IMonsterController, InterfaceHit
+public class MonsterViewController : AnimatorViewController, IViewController, InterfaceHit, InterfaceAI
 {
     public void Attack()
     {
-        
+        _animator.SetTrigger("attack");
+
     }
 
     public void Hit()

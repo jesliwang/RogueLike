@@ -52,7 +52,7 @@ public class GameController : MonoBehaviour {
             .Add(pools.CreateSystem(new CreateEnemySystem()))
 
                 .Add(pools.core.CreateSystem(new StageSystem()))
-
+                .Add(pools.core.CreateSystem(new AISystem()))
             .Add(pools.core.CreateSystem(new AddViewSystem()))
             .Add(pools.bullets.CreateSystem(new AddViewFromObjectPoolSystem()))
 

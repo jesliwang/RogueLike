@@ -9,5 +9,6 @@
 
     public static string Hero = "Player/hero";
     public static string PlayerBullet = "Bullet/playerBullet";
+    public static string EnemyBullet = "Bullet/enemyBullet";
 
 }

@@ -12,7 +12,9 @@ public sealed class CreateEnemySystem : ISetPools, IExecuteSystem {
 
         // TODO Interval should be configurable
         if(_pools.input.tick.value == 60) {
-            _pools.blueprints.blueprints.instance.ApplyMonster(_pools.core.CreateEntity());
+            var ent = _pools.core.CreateEntity();
+            ent.isAI = true;
+            _pools.blueprints.blueprints.instance.ApplyMonster(ent);
         }
     }
 }

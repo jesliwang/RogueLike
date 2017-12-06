@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Entitas;
+using Entitas.Unity.Serialization.Blueprints;
 using UnityEngine;
 
 public class ProcessAttackInputSystem : ISetPools, IReactiveSystem
@@ -27,7 +28,7 @@ public class ProcessAttackInputSystem : ISetPools, IReactiveSystem
             var playerViewController = (IPlayerController)e.view.controller;
             playerViewController.AttackTrigger();
           
-            _pools.blueprints.blueprints.instance.ApplyBullet(_pools.bullets.CreateEntity(), playerViewController.position, Vector2.zero , _bulletsObjectPool, Vector3.zero);
+            _pools.blueprints.blueprints.instance.ApplyBullet(_pools.blueprints.blueprints.instance.playerBullet, _pools.bullets.CreateEntity(), playerViewController.position, Vector2.zero , _bulletsObjectPool, Vector3.zero);
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 class describe_BulletOutOfScreenSystem : nspec {
 
     void when_executing() {
-
+        /*
         it["destroys bullet when out of screen"] = () => {
 
             // given
@@ -28,6 +28,7 @@ class describe_BulletOutOfScreenSystem : nspec {
             bullet.flagDestroy.should_be_false();
             bullet.isOutOfScreen.should_be_true();
         };
+        */
     }
 }
 

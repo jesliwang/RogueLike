@@ -17,15 +17,17 @@ public static class CoreComponentIds {
     public const int Velocity = 6;
     public const int View = 7;
     public const int ViewObjectPool = 8;
-    public const int BulletCoolDown = 9;
-    public const int Enemy = 10;
-    public const int Hit = 11;
-    public const int InAttack = 12;
-    public const int Log = 13;
-    public const int Player = 14;
-    public const int Stage = 15;
+    public const int AI = 9;
+    public const int AIIdle = 10;
+    public const int BulletCoolDown = 11;
+    public const int Enemy = 12;
+    public const int Hit = 13;
+    public const int InAttack = 14;
+    public const int Log = 15;
+    public const int Player = 16;
+    public const int Stage = 17;
 
-    public const int TotalComponents = 16;
+    public const int TotalComponents = 18;
 
     public static readonly string[] componentNames = {
         "Asset",
@@ -37,6 +39,8 @@ public static class CoreComponentIds {
         "Velocity",
         "View",
         "ViewObjectPool",
+        "AI",
+        "AIIdle",
         "BulletCoolDown",
         "Enemy",
         "Hit",
@@ -56,6 +60,8 @@ public static class CoreComponentIds {
         typeof(VelocityComponent),
         typeof(ViewComponent),
         typeof(ViewObjectPoolComponent),
+        typeof(AIComponent),
+        typeof(AIIdle),
         typeof(BulletCoolDownComponent),
         typeof(EnemyComponent),
         typeof(HitComponent),
