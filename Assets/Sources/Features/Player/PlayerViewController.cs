@@ -18,23 +18,28 @@ public class PlayerViewController : AnimatorViewController, IPlayerController, I
     public void SetPlayerDirection(float x, float y)
     {
         bool moveing = false;
+        Vector2 moveDirection = Vector2.zero;
         if (Mathf.Abs(x) > 0.5f){
-            _animator.SetFloat("moveX", x);
+            moveDirection.x = x;
             moveing = true;
         }else{
-            _animator.SetFloat("moveX", 0);
+            moveDirection.x = 0;
         }
 
-
-        if (Mathf.Abs(y) > 0.5f)
-        {
-            _animator.SetFloat("moveY", y);
+        if (Mathf.Abs(y) > 0.5f){
+            moveDirection.y = y;
             moveing = true;
         }else{
-            _animator.SetFloat("moveY", 0);
+            moveDirection.y = 0;
         }
-		
         _animator.SetBool("moveing", moveing);
+        if (moveing)
+        {
+            _animator.SetFloat("moveX", moveDirection.x);
+            _animator.SetFloat("moveY", moveDirection.y);
+        }
+       
+       
     }
 
     public void SetPlayerSpeed(float speed)
